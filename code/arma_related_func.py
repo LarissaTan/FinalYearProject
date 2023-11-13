@@ -104,7 +104,7 @@ def model_arma(p,q,fai_mao):
 
 ##########################################################################
 #(dta,L,k)
-def func(dta,L,k):
+def func(dta,k):
     global dta_len,gamma,diff_n
     diff_n=1
     gamma=[]

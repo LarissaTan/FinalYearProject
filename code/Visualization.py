@@ -21,6 +21,7 @@ dta_1.plot(ax=ax1)
 ax1.xaxis.set_major_locator(mdates.DayLocator())  # 设置主刻度为每天
 ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))  # 设置日期格式
 
+'''
 # 绘制一阶差分图
 fig, ax2 = plt.subplots(figsize=(7, 5))
 dta_2 = pd.Series(pre_face.dta_diff)
@@ -37,6 +38,7 @@ p4 = str(len(hs.dta) + 7)
 dta_3.index = pd.Index(mdates.date2num(sm.tsa.datetools.dates_from_range('1', p4)))
 dta_3.plot(ax=ax3)
 ax3.grid(True, linestyle="-.", color="r", linewidth="1")
+'''
 
 plt.show()
 #python3 -u "/Users/tanqianqian/Desktop/FinalYearProject/code/Visualization.py"
