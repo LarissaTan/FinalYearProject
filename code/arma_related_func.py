@@ -9,21 +9,21 @@ def difference(dataset, interval=1):
     return diff
 
 # 逆差分处理
-def difference_inv(data_diff,dtafir,interval=1):
-    diff_inv = dtafir
+def difference_inv(data_diff,datafir,interval=1):
+    diff_inv = datafir
     for i in range(len(data_diff)):
         value = diff_inv[i]+data_diff[i]
         diff_inv.append(value)
     return diff_inv
 
-# 自协方差函数(k值默认为15),dta的下标是从0~原始数据长度-差分阶数-1(30个数据一阶差分时：0~28)
-def self_covariance(dta,k):
+# 自协方差函数(k值默认为15),data的下标是从0~原始数据长度-差分阶数-1(30个数据一阶差分时：0~28)
+def self_covariance(data,k):
     for kk in range(k+1):
         sum=0
-        for j in range(dta_len-kk):
+        for j in range(data_len-kk):
             #print j,j+kk
-            sum=sum+dta[j]*dta[j+kk]            
-        gamma.append(1/float(len(dta))*sum)
+            sum=sum+data[j]*data[j+kk]            
+        gamma.append(1/float(len(data))*sum)
         #print 'gamma:',gamma
     return gamma
 
@@ -103,18 +103,18 @@ def model_arma(p,q,fai_mao):
     return theta1_ARMA
 
 ##########################################################################
-#(dta,L,k)
-def func(dta,k):
-    global dta_len,gamma,diff_n
+#(data,L,k)
+def func(data,k):
+    global data_len,gamma,diff_n
     diff_n=1
     gamma=[]
     # 计算差分运算
-    dta_diff=difference(dta, diff_n)
-    dta_len=len(dta_diff) # 数据长度    
-    mean_dta=1/float(dta_len)*sum(dta_diff) # 求均值
-    dta_w=[i-mean_dta for i in dta_diff]    # 样本变成W_t 
+    data_diff=difference(data, diff_n)
+    data_len=len(data_diff) # 数据长度    
+    mean_data=1/float(data_len)*sum(data_diff) # 求均值
+    data_w=[i-mean_data for i in data_diff]    # 样本变成W_t 
     # 计算自协方差
-    gamma=self_covariance(dta_w,k)
+    gamma=self_covariance(data_w,k)
     #print 'gamma:',gamma
     # 计算自相关函数
     rou=autocorrelation(gamma)
@@ -123,6 +123,6 @@ def func(dta,k):
     fai_ex,fai=partial_correlation(rou,k)
 
     #print(f'({fai_ex}, {fai}) is ok!! ')
-    return dta_diff,dta_len,gamma,mean_dta,dta_w,rou,fai_ex,fai
+    return data_diff,data_len,gamma,mean_data,data_w,rou,fai_ex,fai
 
 #python3 -u "/Users/tanqianqian/Desktop/FinalYearProject/code/arma_related_func.py"

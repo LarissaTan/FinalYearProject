@@ -16,7 +16,7 @@ data = [75, 72, 70, 68, 75, 80, 82, 78, 80, 76, 78, 75, 80, 85,
 # 预测(dta,model,p,q=1,L=1,k=39)
 print('the len of data:', len(data))
 ARMA_pre, ARMA_pre_inv = pre.interface_pre(data, 3, 15, 1, 20)
-print('ARMA:', ARMA_pre)
+print('predict data:', ARMA_pre)
 
 
 #python3 -u "/Users/tanqianqian/Desktop/FinalYearProject/code/arma.py"
