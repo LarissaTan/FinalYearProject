@@ -6,6 +6,6 @@ if __name__ == '__main__':
     time.sleep(1)
 
     while True:
-        now = time.strftime('%m/%d %H:%M:%S', time.localtime(time.time()))
-        LCD.print_lcd(1, 1, now)
+        #now = time.strftime('%m/%d %H:%M:%S', time.localtime(time.time()))
+        LCD.print_lcd(1, 1, 'Hello, world!')
         time.sleep(0.2)
