@@ -50,3 +50,5 @@ ax3.grid(True, linestyle="-.", color="r", linewidth="1")
 
 plt.show()
 #python3 -u "/Users/tanqianqian/Desktop/FinalYearProject/code/Visualization.py"
+#linear time series aggregation algorithm: ARIMA
+
