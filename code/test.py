@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-import MCP3008
+import Adafruit_GPIO.SPI as SPI
+import Adafruit_MCP3008
 from scipy import signal,stats
 import multiprocessing
 import pandas as pd
@@ -8,7 +9,7 @@ import datetime
 #Hardware SPI configuration:
 SPI_PORT   = 0
 SPI_DEVICE = 0
-mcp = MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
+mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 dfecg = pd.DataFrame(columns=['Time', 'Sample'])
 x_len = 150
 # Create figure for plotting
@@ -103,9 +104,8 @@ def loop1():
         interval=3,
         blit=True)
     plt.show()
-    dfecg['Time'] = timeecg
-    dfecg['Sample'] = ecg
-    dfecg.to_csv('ECG.csv')
+    print(timeecg)
+    print(ecg)
 
 
 if __name__ == '__main__':
