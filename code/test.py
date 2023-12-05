@@ -66,44 +66,8 @@ def moving_average(values, window):
         filtered.append(avg)
 
     return filtered
-#sos = signal.butter(2,0.5,btype='highpass',output='sos',fs=200)
-# This function is called periodically from FuncAnimation
-def animate(i, ys):
 
-    value = mcp.read_adc(0)
-
-    # Add y to list
-    ys.append(value)
-
-    # Limit y list to set number of items
-    ys = ys[-x_len:]
-    y_ = stats.zscore(ys)
-    #y1 = signal.sosfilt(sos,ys)
-    #y1 = y1[-x_len:]
-    y = moving_average(y_,2)
-    y = y[-x_len:]
-    #append_data_in_csv
-    #with open('ECG_data.csv', 'a', newline='') as file:
-        #writer = csv.writer(file)
-        #writer.writerow([i,ys[x_len-1]])
-
-    # Update line with new Y values
-    #line.set_ydata(ys)
-    ecg.append(y[x_len-1])
-    timeecg.append(datetime.datetime.now())
-
-    line.set_ydata(y)
-
-    return line,
-
-# Set up plot to call animate() function periodically
 def loop1():
-    ani = animation.FuncAnimation(fig,
-        animate,
-        fargs=(ys,),
-        interval=3,
-        blit=True)
-    plt.show()
     print(timeecg)
     print(ecg)
 
