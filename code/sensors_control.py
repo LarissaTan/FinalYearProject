@@ -1,6 +1,6 @@
 import time
 import LCD1602 as LCD
-from pulse_sensor import PulseSensor
+from pulsesensor import PulseSensor
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
