@@ -25,11 +25,13 @@ if __name__ == '__main__':
     p = PulseSensor()
     p.startAsyncBPM()
 
-    value = mcp.read_adc(0)
-    print("value of ECG: " + str(value))
+    #value = mcp.read_adc(0)
+    #print("value of ECG: " + str(value))
 
     while True:
         bpm = int(p.BPM)
+        value = mcp.read_adc(0)
+        print("value of ECG: " + str(value))
         if(bpm-125) > 0:
             #GPIO.output(12, GPIO.HIGH)
 
