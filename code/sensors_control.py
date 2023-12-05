@@ -14,9 +14,10 @@ if __name__ == '__main__':
     p.startAsyncBPM()
 
     while True:
-        bpm = p.BPM
+        bpm = int(p.BPM)
         if(bpm-125) > 0:
             #GPIO.output(12, GPIO.HIGH)
+
             LCD.print_lcd(1, 1, str(bpm - 125))
             print("HIGH, " + str(bpm - 125))
         else:
