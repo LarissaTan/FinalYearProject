@@ -17,7 +17,7 @@ if __name__ == '__main__':
         bpm = p.BPM
         if(bpm-125) > 0:
             #GPIO.output(12, GPIO.HIGH)
-            LCD.print_lcd(1, 1, int(bpm - 125))
+            LCD.print_lcd(1, 1, str(bpm - 125))
             print("HIGH" % (bpm - 125))
         else:
             print("no heart beat")
