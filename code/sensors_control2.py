@@ -145,7 +145,7 @@ if __name__ == '__main__':
                 msg.add_segment("OBR")
                 msg.obr.obr_4 = str(msglst)  # 假设您的时序数据作为一个字符串存储在此处
                 
-                ecg_message = cipher_suite.encrypt(msg.to_er7()).decode()
+                ecg_message = cipher_suite.encrypt(msg.to_er7().encode()).decode()
                 txn = contra.functions.addMessage(ecg_message).build_transaction({
                     'from': account_address,
                     'nonce': web3.eth.get_transaction_count(account_address),
