@@ -14,7 +14,6 @@ import sys
 import time
 import smbus
 import serial
-import regex as re
 
 import LCD1602 as LCD
 import RPi.GPIO as GPIO
