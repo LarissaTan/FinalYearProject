@@ -7,12 +7,9 @@ import matplotlib.animation as animation
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 from scipy import signal,stats
-import multiprocessing
 import pandas as pd
 
-import sys
 import time
-import smbus
 import serial
 
 import LCD1602 as LCD
@@ -148,7 +145,7 @@ if __name__ == '__main__':
                 msg.add_segment("OBR")
                 msg.obr.obr_4 = str(msglst)  # 假设您的时序数据作为一个字符串存储在此处
                 
-                ecg_message = cipher_suite.decrypt(msg.to_er7()).decode().decode()
+                ecg_message = cipher_suite.encrypt(msg.to_er7()).decode()
                 txn = contra.functions.addMessage(ecg_message).build_transaction({
                     'from': account_address,
                     'nonce': web3.eth.get_transaction_count(account_address),
