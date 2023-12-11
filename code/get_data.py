@@ -1,6 +1,6 @@
 from web3 import Web3
 
-from hl7apy.core import Message
+#from hl7apy.core import Message
 
 from cryptography.fernet import Fernet
 
@@ -96,6 +96,8 @@ contra = web3.eth.contract(address=conadress, abi=conabi)
 
 result = contra.functions.getLastMessage().call()
 
-print(result)
+#print(result)
 
 print(cipher_suite.decrypt(bytes(result, 'utf-8')).split(b'|')[-1].decode('utf-8'))
+
+#python3 -u "/Users/tanqianqian/Desktop/FinalYearProject/code/get_data.py"
