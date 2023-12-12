@@ -157,6 +157,7 @@ if __name__ == '__main__':
 			pulse_data = -1
 
 		msglst.append(pulse_data)
+		print('the vaule before hash:' + formatted_datetime + str(amplitude_ecg) + str(pulse_data))
 		msglst.append(hash(formatted_datetime + str(amplitude_ecg) + str(pulse_data)))
         
 		msg = Message("ORU_R01")
