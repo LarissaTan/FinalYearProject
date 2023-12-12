@@ -34,7 +34,7 @@ if __name__ == '__main__':
         bpm = int(p.BPM)
         value = mcp.read_adc(0)
         voltage_ecg = (value / 1023.0) * 3.3
-        amplitude_ecg = voltage_ecg * (3.0 / 3.3)
+        amplitude_ecg = round(voltage_ecg * (3.0 / 3.3), 3)
         print("value of ECG: " + str(amplitude_ecg))
   
         if(bpm-125) > 0:
