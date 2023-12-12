@@ -158,7 +158,7 @@ if __name__ == '__main__':
 			pulse_output = "No"
 			msglst.append(-1)
 
-		msglst.append(hash(current_datetime + str(amplitude_ecg) + str(bpm - 125)))
+		msglst.append(hash(formatted_datetime + str(amplitude_ecg) + str(bpm - 125)))
         
 		msg = Message("ORU_R01")
 		msg.msh.msh_9 = "ORU^R01"
