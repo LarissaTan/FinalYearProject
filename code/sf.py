@@ -1,6 +1,15 @@
 #fingerprints the message using SHA-256 algorithm
 #using sha256 algorithm to hash the message along with the timestamp
 #the timestamp is using ISO 8601 format
+from datetime import datetime
+
+# 获取当前日期和时间
+current_datetime = datetime.now()
+
+# 格式化输出
+formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+print(formatted_datetime)
+
 input = 'temperature37_' + '2023-10-23 14:30:00'
 
 binaries = input.encode('utf8')
