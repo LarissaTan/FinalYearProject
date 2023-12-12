@@ -9,6 +9,7 @@ import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 from scipy import signal,stats
 import pandas as pd
+import hashlib
 
 import time
 import serial
@@ -156,9 +157,12 @@ if __name__ == '__main__':
 			pulse_output = "No"
 			pulse_data = -1
 
+		LCD.print_lcd(1, 1, ecg_output + "|" + pulse_output)
+
 		msglst.append(pulse_data)
 		print('the vaule before hash:' + formatted_datetime + str(amplitude_ecg) + str(pulse_data))
-		msglst.append(hash(formatted_datetime + str(amplitude_ecg) + str(pulse_data)))
+		data_for_hash = formatted_datetime + str(amplitude_ecg) + str(pulse_data)
+		msglst.append(hashlib.sha256(data_for_hash.encode()).hexdigest())
         
 		msg = Message("ORU_R01")
 		msg.msh.msh_9 = "ORU^R01"
@@ -176,9 +180,7 @@ if __name__ == '__main__':
 		signed_txn = web3.eth.account.sign_transaction(txn, private_key=private_key)
 		txn_hash = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
 		web3.eth.wait_for_transaction_receipt(txn_hash)
-		print("txn_hash.hex()")
 
-        #now = time.strftime('%m/%d %H:%M:%S', time.localtime(time.time()))
-        #LCD.print_lcd(1, 1, 'Hello, world!')
-		LCD.print_lcd(1, 1, ecg_output + "|" + pulse_output)
+
+		print('----------------end----------------')
 		time.sleep(1)
