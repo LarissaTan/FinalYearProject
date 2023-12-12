@@ -18,6 +18,9 @@ SPI_PORT   = 0
 SPI_DEVICE = 0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
+# 设置开关引脚为输入模式
+GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
 if __name__ == '__main__':
     LCD.init_lcd()
     time.sleep(1)
@@ -32,6 +35,13 @@ if __name__ == '__main__':
         bpm = int(p.BPM)
         value = mcp.read_adc(0)
         print("value of ECG: " + str(value))
+        switch_state = GPIO.input(17)
+
+        if switch_state == GPIO.LOW:
+            print("open")
+        else:
+            print("close")
+            
         if(bpm-125) > 0:
             #GPIO.output(12, GPIO.HIGH)
 
