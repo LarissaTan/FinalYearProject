@@ -20,10 +20,8 @@ from web3 import Web3
 
 from hl7apy.core import Message
 
-from cryptography.fernet import Fernet
 
 key = b'SfMxJjQQBBZ1DrJZ0xZwiM0K1jvFAWB1c8pQL7W9mQs='
-cipher_suite = Fernet(key)
 
 account_address  = '0x46C3d6d846Ada43774999Fc066211BC961b19F70'
 private_key = '0f52b49df6f1d8c737dad58969e6b66bc1ee53f8e2f314b19eb7a4cddd9e9000'
@@ -164,8 +162,9 @@ if __name__ == '__main__':
 		msg.msh.msh_9 = "ORU^R01"
 		msg.add_segment("OBR")
 		msg.obr.obr_4 = str(msglst)  # 假设您的时序数据作为一个字符串存储在此处
-                
-		txn = contra.functions.addMessage(msg).build_transaction({
+		msg_str = msg.to_er7()
+
+		txn = contra.functions.addMessage(msg_str).build_transaction({
 			'from': account_address,
             'nonce': web3.eth.get_transaction_count(account_address),
             'gas': 2000000,  # 设置足够的 Gas 上限
