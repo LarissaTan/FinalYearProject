@@ -147,16 +147,17 @@ if __name__ == '__main__':
             #GPIO.output(12, GPIO.HIGH)
 			pulse_output = "P:" + str(bpm - 125)
 			print("HIGH, " + str(bpm - 125))
-			msglst.append((bpm - 125))
+			pulse_data = bpm - 125
 
 			print(f"data lenth {len(msglst)}")
                 
 		else:
 			print("no heart beat")
 			pulse_output = "No"
-			msglst.append(-1)
+			pulse_data = -1
 
-		msglst.append(hash(formatted_datetime + str(amplitude_ecg) + str(bpm - 125)))
+		msglst.append(pulse_data)
+		msglst.append(hash(formatted_datetime + str(amplitude_ecg) + str(pulse_data)))
         
 		msg = Message("ORU_R01")
 		msg.msh.msh_9 = "ORU^R01"
