@@ -31,19 +31,24 @@ if __name__ == '__main__':
     #print("value of ECG: " + str(value))
 
     while True:
+
         bpm = int(p.BPM)
         value = mcp.read_adc(0)
         voltage_ecg = (value / 1023.0) * 3.3
         amplitude_ecg = round(voltage_ecg * (3.0 / 3.3), 3)
+        ecg_output = "ECG:" + str(amplitude_ecg)
         print("value of ECG: " + str(amplitude_ecg))
   
         if(bpm-125) > 0:
             #GPIO.output(12, GPIO.HIGH)
-
-            LCD.print_lcd(1, 1, str(bpm - 125))
+            
+            pulse_output = "Pulse:" + str(bpm - 125)
             print("HIGH, " + str(bpm - 125))
         else:
             print("no heart beat")
+            pulse_output = "No pulse"
+        
+        LCD.print_lcd(1, 1, ecg_output + "|" + pulse_output)
         
         #now = time.strftime('%m/%d %H:%M:%S', time.localtime(time.time()))
         #LCD.print_lcd(1, 1, 'Hello, world!')
