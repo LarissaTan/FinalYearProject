@@ -114,8 +114,19 @@ if data_start_index != -1 and data_end_index != -1:
     
     # 输出每个元素
     for element in data_list:
+        parts = element.split(', ')
+        time = parts[0][0:-1]
+        
+        value1 = float(parts[1])
+        value2 = int(parts[2])
+        value3 = parts[3][1:-1]
+        print("Time:", time)
+        print("Value1:", value1)
+        print("Value2:", value2)
+        print("Value3:", value3)
         print(element)
-        time = element[0:19]
+        
+
         time = datetime.strptime(time, "%Y-%m-%d %H:%M:%S")
         tmps = read_data()
         tmp_time = tmps[-1][0]
@@ -137,14 +148,9 @@ if data_start_index != -1 and data_end_index != -1:
         '''
             
         #比存的更新的数据
+
+		
         if time > tmp_time:
-            print(time)
-            if(element[22] == '-'):
-                ecg = element[22:28]
-            else:
-                ecg = element[22:27]
-            ecg = float(ecg)
-            print(ecg)
             data_ecg_pre_set = read_data()
             data_ecg_pre_set = [float(x[1]) for x in data_ecg_pre_set]
             
@@ -153,7 +159,7 @@ if data_start_index != -1 and data_end_index != -1:
             data_combined_ecg = forecast_data_set + data_ecg_pre_set
             mean_ecg = round(sum(data_combined_ecg) / len(data_combined_ecg), 3)
             print(f"The combined average value is: {mean_ecg}")
-            ecg_value = ecg + mean_ecg 
+            ecg_value = value1 + mean_ecg 
 
 
             tmp_write_data = element[0:19] + ";" + str(ecg_value)
@@ -161,10 +167,10 @@ if data_start_index != -1 and data_end_index != -1:
             print("i dont why here is working")
             print(time, "----",tmp_time)
             tmp = element[29]
-            if (tmp == '-'):
+            if (value2 <= 0):
                 pulse = 'null'
             else:
-                pulse = element[29:32]
-            print(pulse)
+                print(value2)
+
 
 #python3 -u "/Users/tanqianqian/Desktop/FinalYearProject/code/get_data.py"
