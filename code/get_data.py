@@ -94,10 +94,10 @@ conabi = [
 
 contra = web3.eth.contract(address=conadress, abi=conabi)
 
-result = contra.functions.getLastMessage().call()
+result = contra.functions.getAllMessages().call()
 
 #print(result)
 
-print(cipher_suite.decrypt(bytes(result, 'utf-8')).split(b'|')[-1].decode('utf-8'))
+print(result)
 
 #python3 -u "/Users/tanqianqian/Desktop/FinalYearProject/code/get_data.py"

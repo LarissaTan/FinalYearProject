@@ -1,4 +1,4 @@
-from arma import perform_arma_prediction
+from arima import perform_arma_prediction
 
 data = [11, 23, 32, 43, 54, 65, 76, 87, 98, 102]
 

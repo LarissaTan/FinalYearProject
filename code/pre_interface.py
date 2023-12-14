@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import arma_related_func  as fr
+import arima_related_func  as fr
 
 # AR(P)模型预测和(data,p,k)
 def ar_pre(data,p,k):  
