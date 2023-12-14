@@ -140,7 +140,7 @@ if data_start_index != -1 and data_end_index != -1:
             ecg = float(ecg)
             print(ecg)
             data_ecg_pre_set = read_data()
-            data_ecg_pre_set = [float(x) for x in data_ecg_pre_set]
+            data_ecg_pre_set = [float(x[1]) for x in data_ecg_pre_set]
             
             forecast_data_set = perform_arma_prediction(data_ecg_pre_set)
             forecast_data_set = [round(y,3) for y in forecast_data_set]

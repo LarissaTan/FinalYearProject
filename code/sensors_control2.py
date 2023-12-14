@@ -147,7 +147,7 @@ if __name__ == '__main__':
 
 		#这里开始做forecast
 		data_ecg_pre_set = read_data()
-		data_ecg_pre_set = [float(x) for x in data_ecg_pre_set]
+		data_ecg_pre_set = [float(x[1]) for x in data_ecg_pre_set]
 
 		forecast_data_set = perform_arma_prediction(data_ecg_pre_set)
 		forecast_data_set = [round(y,3) for y in forecast_data_set]
@@ -170,7 +170,7 @@ if __name__ == '__main__':
 			print(f"data lenth {len(msglst)}")
 			#这里开始做forecast
 			data_pulse_pre_set = read_data_pulse()
-			data_pulse_pre_set = [float(x) for x in data_pulse_pre_set]
+			data_pulse_pre_set = [float(x[1]) for x in data_pulse_pre_set]
 
 			forecast_pulse_data_set = perform_arma_prediction(data_pulse_pre_set)
 			forecast_pulse_data_set = [round(y,3) for y in forecast_pulse_data_set]
