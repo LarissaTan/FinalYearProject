@@ -157,7 +157,7 @@ if __name__ == '__main__':
 		mean_ecg = round(sum(data_combined_ecg) / len(data_combined_ecg), 3)
 		print(f"The combined average value is: {mean_ecg}")
 
-		variance_ecg = amplitude_ecg - mean_ecg
+		variance_ecg = round((amplitude_ecg - mean_ecg),3)
 		print("ecg:" + str(amplitude_ecg))
 		print("mean:" + str(mean_ecg))
 		print("variance_ecg:" + str(variance_ecg))
