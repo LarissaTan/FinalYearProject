@@ -158,6 +158,9 @@ if __name__ == '__main__':
 		print(f"The combined average value is: {mean_ecg}")
 
 		variance_ecg = amplitude_ecg - mean_ecg
+		print("ecg:" + amplitude_ecg)
+		print("mean:" + mean_ecg)
+		print("variance_ecg:" + variance_ecg)
 		msglst.append(variance_ecg)
 
 
