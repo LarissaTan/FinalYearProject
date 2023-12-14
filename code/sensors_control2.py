@@ -154,10 +154,10 @@ if __name__ == '__main__':
 
 		# 计算均值
 		data_combined_ecg = forecast_data_set + data_ecg_pre_set
-		mean_ecg = sum(data_combined_ecg) / len(data_combined_ecg)
+		mean_ecg = round(sum(data_combined_ecg) / len(data_combined_ecg), 3)
 		print(f"The combined average value is: {mean_ecg}")
 
-		variance_ecg = amplitude_ecg - mean_ecg - 1
+		variance_ecg = amplitude_ecg - mean_ecg
 		msglst.append(variance_ecg)
 
 
