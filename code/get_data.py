@@ -1,5 +1,9 @@
 from web3 import Web3
-
+import math
+from store_data import *
+from store_data_pulse import *
+from arima import *
+from datetime import datetime
 #from hl7apy.core import Message
 
 from cryptography.fernet import Fernet
@@ -94,10 +98,67 @@ conabi = [
 
 contra = web3.eth.contract(address=conadress, abi=conabi)
 
-result = contra.functions.getAllMessages().call()
+result = contra.functions.getLastMessages().call()
 
 #print(result)
 
 print(result)
+
+ # 解析字符串中的数据
+data_start_index = result.find("['")
+data_end_index = result.find("']")
+    
+if data_start_index != -1 and data_end_index != -1:
+    data_string = result[data_start_index + 2: data_end_index]
+    data_list = data_string.split("', '")
+        
+    # 输出每个元素
+    for element in data_list:
+        print(element)
+        time = element[0:19]
+        time = datetime.strptime(time, "%Y-%m-%d %H:%M:%S")
+        tmps = read_data()
+        tmp_time = tmps[-1][0]
+        tmp_time = datetime.strptime(tmp_time, "%Y-%m-%d %H:%M:%S")
+            
+		#忽略前面的数据，只输出和存的最新数据一样的数据
+        if time == tmp_time:
+            print(time)
+            ecg = element[22:27]
+            print(ecg)
+            tmp = element[29]
+            if (tmp == '-'):
+                pulse = 'null'
+            else:
+                pulse = element[29:32]
+            print(pulse)
+            
+		#比存的更新的数据
+        if time > tmp_time:
+            print(time)
+            ecg = element[22:27]
+            ecg = float(ecg)
+            print(ecg)
+            data_ecg_pre_set = read_data()
+            data_ecg_pre_set = [float(x) for x in data_ecg_pre_set]
+            
+            forecast_data_set = perform_arma_prediction(data_ecg_pre_set)
+            forecast_data_set = [round(y,3) for y in forecast_data_set]
+            data_combined_ecg = forecast_data_set + data_ecg_pre_set
+            mean_ecg = sum(data_combined_ecg) / len(data_combined_ecg)
+            print(f"The combined average value is: {mean_ecg}")
+            ecg_value = math.sqrt(ecg) + mean_ecg
+
+
+            tmp_write_data = element[0:19] + ";" + ecg_value
+            write_data(tmp_write_data)
+            print("i dont why here is working")
+            print(time, "----",tmp_time)
+            tmp = element[29]
+            if (tmp == '-'):
+                pulse = 'null'
+            else:
+                pulse = element[29:32]
+            print(pulse)
 
 #python3 -u "/Users/tanqianqian/Desktop/FinalYearProject/code/get_data.py"

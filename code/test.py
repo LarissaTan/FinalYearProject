@@ -1,74 +1,80 @@
-from cryptography.hazmat.primitives import serialization, hashes
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
-import base64
+from store_data_pulse import *
+from store_data import *
+from datetime import datetime
+from arima import perform_arma_prediction
+'''
+data = [11, 23, 32, 43, 54, 65, 76, 87, 98, 102]
 
-def generate_key_pair():
-    private_key = rsa.generate_private_key(
-        public_exponent=65537,
-        key_size=2048,
-    )
-    public_key = private_key.public_key()
-    return private_key, public_key
 
-def encrypt_text(text, public_key):
-    cipher_text = public_key.encrypt(
-        text,
-        padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None
-        )
-    )
-    return base64.b64encode(cipher_text).decode('utf-8')
+print(perform_arma_prediction(data))
+'''
 
-def decrypt_text(encrypted_text, private_key):
-    cipher_text = base64.b64decode(encrypted_text)
-    decrypted_text = private_key.decrypt(
-        cipher_text,
-        padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None
-        )
-    )
-    return decrypted_text.decode('utf-8')
+write_data_pulse("2023-12-13 23:45:51;106")
+write_data_pulse("2023-12-13 23:46:27;104")
+write_data_pulse("2023-12-13 23:46:49;105")
+write_data_pulse("2023-12-13 23:47:02;102")
+write_data_pulse("2023-12-13 23:47:26;102")
+write_data_pulse("2023-12-13 23:47:38;99")
 
-def write_encrypted_text_to_file(file_path, encrypted_text):
-    with open(file_path, 'w') as file:
-        file.write(encrypted_text)
+write_data_pulse("2023-12-13 23:48:02;101")
+write_data_pulse("2023-12-13 23:48:14;107")
+write_data_pulse("2023-12-13 23:48:39;108")
+write_data_pulse("2023-12-13 23:48:51;110")
 
-def read_encrypted_text_from_file(file_path):
-    with open(file_path, 'r') as file:
-        encrypted_text = file.read()
-    return encrypted_text
+tmps = read_data_pulse()
+print(tmps.__len__())
+#print(tmps[-1][0]) #最后新的时间获取
 
-# 生成密钥对
-private_key, public_key = generate_key_pair()
+for tmp in tmps:
+    print(tmp)
+    ''' 
+    print("....")
+    print(tmp[1])
+    print(tmp[2])
+    print(tmp[0])
+    print("....")
+    
 
-# 要加密的文本
-plain_text = b"45"
+    date_object = datetime.strptime(tmp[0], "%Y-%m-%d %H:%M:%S")
+    print("Date Object:", date_object)
+    # 获取当前时间
+    current_time = datetime.now()
 
-# 检查文件是否存在并删除内容
-file_path = 'encrypted_data.txt'
-try:
-    with open(file_path, 'r') as file:
-        if file.read():
-            # 文件非空，删除内容
-            with open(file_path, 'w') as empty_file:
-                empty_file.write('')
-except FileNotFoundError:
-    pass
+    # 比较两个 datetime 对象
+    if date_object > current_time:
+        print("日期在当前时间之后")
+    elif date_object < current_time:
+        print("日期在当前时间之前")
+    else:
+        print("日期与当前时间相同")
+    print("Value 1:", tmp[1])
+    print("Value 2:", tmp[2])
+    '''
 
-# 加密文本
-encrypted_text = encrypt_text(plain_text, public_key)
+    '''
+    write_data("2023-12-13 23:46:27;2.056;104")
+    write_data("2023-12-13 23:46:49;1.997;105")
+    write_data("2023-12-13 23:47:02;2.076;102")
+    write_data("2023-12-13 23:47:26;2.238;102")
+    write_data("2023-12-13 23:47:38;2.012;99")
 
-# 将加密后的文本写入文件
-write_encrypted_text_to_file(file_path, encrypted_text)
-print(f"Encrypted Text has been written to '{file_path}'.")
+    write_data("2023-12-13 23:48:02;2.413;101")
+    write_data("2023-12-13 23:48:14;2.264;107")
+    write_data("2023-12-13 23:48:39;2.716;108")
+    write_data("2023-12-13 23:48:51;2.801;110")
+    write_data("2023-12-13 23:49:26;2.798;-1")
+    '''
 
-# 从文件中读取加密后的文本
-read_encrypted_text = read_encrypted_text_from_file(file_path)
+    '''
+write_data("2023-12-13 23:45:51;106")
+write_data("2023-12-13 23:46:27;104")
+write_data("2023-12-13 23:46:49;105")
+write_data("2023-12-13 23:47:02;102")
+write_data("2023-12-13 23:47:26;102")
+write_data("2023-12-13 23:47:38;99")
 
-# 解密文本
-decrypted_text = decrypt_text(read_encrypted_text, private_key)
-print("Decrypted Text:", decrypted_text)
+write_data("2023-12-13 23:48:02;101")
+write_data("2023-12-13 23:48:14;107")
+write_data("2023-12-13 23:48:39;108")
+write_data("2023-12-13 23:48:51;110")
+    '''

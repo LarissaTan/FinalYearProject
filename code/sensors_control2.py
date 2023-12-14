@@ -10,6 +10,9 @@ import Adafruit_MCP3008
 from scipy import signal,stats
 import pandas as pd
 import hashlib
+from store_data import *
+from store_data_pulse import *
+from arima import *
 
 import time
 import serial
@@ -141,7 +144,21 @@ if __name__ == '__main__':
 		ecg_output = "E:" + str(amplitude_ecg)
 		print("value of ECG: " + str(amplitude_ecg))
 		print("value of ECG: " + str(value))
-		msglst.append(amplitude_ecg)
+
+		#这里开始做forecast
+		data_ecg_pre_set = read_data()
+		data_ecg_pre_set = [float(x) for x in data_ecg_pre_set]
+
+		forecast_data_set = perform_arma_prediction(data_ecg_pre_set)
+		forecast_data_set = [round(y,3) for y in forecast_data_set]
+
+		# 计算均值
+		data_combined_ecg = forecast_data_set + data_ecg_pre_set
+		mean_ecg = sum(data_combined_ecg) / len(data_combined_ecg)
+		print(f"The combined average value is: {mean_ecg}")
+
+		variance_ecg = (amplitude_ecg - mean_ecg) ** 2
+		msglst.append(variance_ecg)
 
 
 		if(bpm-125) > 0:
@@ -151,15 +168,31 @@ if __name__ == '__main__':
 			pulse_data = bpm - 125
 
 			print(f"data lenth {len(msglst)}")
+			#这里开始做forecast
+			data_pulse_pre_set = read_data_pulse()
+			data_pulse_pre_set = [float(x) for x in data_pulse_pre_set]
+
+			forecast_pulse_data_set = perform_arma_prediction(data_pulse_pre_set)
+			forecast_pulse_data_set = [round(y,3) for y in forecast_pulse_data_set]
+
+			# 计算均值
+			data_combined_pulse = forecast_pulse_data_set + data_pulse_pre_set
+			mean_pulse = sum(data_combined_pulse) / len(data_combined_pulse)
+			print(f"The combined average value is: {mean_pulse}")
+
+			variance_pulse = (pulse_data - mean_pulse) ** 2
+			msglst.append(variance_pulse)
+			pulse_data = variance_pulse
                 
 		else:
 			print("no heart beat")
 			pulse_output = "No"
 			pulse_data = -1
+			msglst.append(pulse_data)
 
 		LCD.print_lcd(1, 1, ecg_output + "|" + pulse_output)
 
-		msglst.append(pulse_data)
+
 		print('the vaule before hash:' + formatted_datetime + str(amplitude_ecg) + str(pulse_data))
 		data_for_hash = formatted_datetime + str(amplitude_ecg) + str(pulse_data)
 		msglst.append(hashlib.sha256(data_for_hash.encode()).hexdigest())
