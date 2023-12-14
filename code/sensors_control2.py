@@ -157,7 +157,7 @@ if __name__ == '__main__':
 		mean_ecg = sum(data_combined_ecg) / len(data_combined_ecg)
 		print(f"The combined average value is: {mean_ecg}")
 
-		variance_ecg = (amplitude_ecg - mean_ecg) ** 2
+		variance_ecg = amplitude_ecg - mean_ecg - 1
 		msglst.append(variance_ecg)
 
 
@@ -180,7 +180,7 @@ if __name__ == '__main__':
 			mean_pulse = sum(data_combined_pulse) / len(data_combined_pulse)
 			print(f"The combined average value is: {mean_pulse}")
 
-			variance_pulse = (pulse_data - mean_pulse) ** 2
+			variance_pulse = pulse_data - mean_pulse - 50
 			msglst.append(variance_pulse)
 			pulse_data = variance_pulse
                 

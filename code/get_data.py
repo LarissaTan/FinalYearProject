@@ -98,7 +98,7 @@ conabi = [
 
 contra = web3.eth.contract(address=conadress, abi=conabi)
 
-result = contra.functions.getLastMessages().call()
+result = contra.functions.getLastMessage().call()
 
 #print(result)
 
@@ -147,10 +147,10 @@ if data_start_index != -1 and data_end_index != -1:
             data_combined_ecg = forecast_data_set + data_ecg_pre_set
             mean_ecg = sum(data_combined_ecg) / len(data_combined_ecg)
             print(f"The combined average value is: {mean_ecg}")
-            ecg_value = math.sqrt(ecg) + mean_ecg
+            ecg_value = ecg + mean_ecg + 1
 
 
-            tmp_write_data = element[0:19] + ";" + ecg_value
+            tmp_write_data = element[0:19] + ";" + str(ecg_value)
             write_data(tmp_write_data)
             print("i dont why here is working")
             print(time, "----",tmp_time)
