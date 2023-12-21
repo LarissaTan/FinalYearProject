@@ -127,11 +127,6 @@ if data_start_index != -1 and data_end_index != -1:
         value3 = parts[3][1:]
         #value4 = parts[4]
 
-        '''
-        print("Time:", time)
-        print("Value1:", value1)
-        print("Value2:", value2)
-        '''
         print("Value3:", value3)
         print(element)
 
@@ -141,11 +136,17 @@ if data_start_index != -1 and data_end_index != -1:
         data_ecg_pre_set = [float(x[1]) for x in data_ecg_pre_set]
 
         forecast_data_set = perform_arma_prediction(data_ecg_pre_set)
+        print("Forecast data set is: ")
+        print(forecast_data_set)
         forecast_data_set = [round(y,3) for y in forecast_data_set]
 
 		# 计算均值
         data_combined_ecg = forecast_data_set + data_ecg_pre_set
         mean_ecg = round(sum(data_combined_ecg) / len(data_combined_ecg), 3)
+        print("the length of data_combined_ecg is: " + str(len(data_combined_ecg)))
+        print("------------------")
+        print("The sum value is:" + str(sum(data_combined_ecg)))
+        print("------------------")
         print(f"The combined average value is: {mean_ecg}")
 
         raw_ecg = round((value1 + mean_ecg) - float(5.0),3)
