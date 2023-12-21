@@ -207,4 +207,4 @@ if __name__ == '__main__':
 
 
 		print('----------------end----------------')
-		time.sleep(1)
+		time.sleep(2)
