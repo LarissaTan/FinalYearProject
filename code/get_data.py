@@ -145,7 +145,7 @@ if data_start_index != -1 and data_end_index != -1:
         mean_ecg = round(sum(data_combined_ecg) / len(data_combined_ecg), 3)
         print(f"The combined average value is: {mean_ecg}")
 
-        raw_ecg = round((value1 + mean_ecg),3)
+        raw_ecg = round((value1 + mean_ecg),3) - 5.0
         
 
         data_for_hash = time + str(raw_ecg) + str(value2)
