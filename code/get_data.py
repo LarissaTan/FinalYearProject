@@ -1,5 +1,6 @@
 from web3 import Web3
 import math
+import hashlib
 from store_data import *
 from store_data_pulse import *
 from arima import *
@@ -115,16 +116,50 @@ if data_start_index != -1 and data_end_index != -1:
     # 输出每个元素
     for element in data_list:
         parts = element.split(', ')
+        print(len(parts))
         time = parts[0][0:-1]
         
+        print(parts)
+
+
         value1 = float(parts[1])
         value2 = int(parts[2])
-        value3 = parts[3][1:-1]
+        value3 = parts[3][1:]
+        #value4 = parts[4]
         print("Time:", time)
         print("Value1:", value1)
         print("Value2:", value2)
         print("Value3:", value3)
         print(element)
+
+        #开始走ISF
+        #这里开始做forecast
+        data_ecg_pre_set = read_data()
+        data_ecg_pre_set = [float(x[1]) for x in data_ecg_pre_set]
+
+        forecast_data_set = perform_arma_prediction(data_ecg_pre_set)
+        forecast_data_set = [round(y,3) for y in forecast_data_set]
+
+		# 计算均值
+        data_combined_ecg = forecast_data_set + data_ecg_pre_set
+        mean_ecg = round(sum(data_combined_ecg) / len(data_combined_ecg), 3)
+        print(f"The combined average value is: {mean_ecg}")
+
+        raw_ecg = round((value1 + mean_ecg),3)
+        
+
+        data_for_hash = time + str(raw_ecg) + str(value2)
+        hash_vaule = hashlib.sha256(data_for_hash.encode()).hexdigest()
+
+        print(data_for_hash)
+
+        print(hash_vaule)
+        print(value3)
+
+        if(hash_vaule == value3):
+            print("The hash value is correct")
+        else:
+            print("The hash value is not correct")
         
 
         time = datetime.strptime(time, "%Y-%m-%d %H:%M:%S")

@@ -2,8 +2,8 @@
 import matplotlib.pyplot as plt 
 import statsmodels.api as sm
 import pandas as pd
-import arma as hs
-import arma_related_func  as fr
+import arimia_test as hs
+import arima_related_func as fr
 import pre_interface as pre_face
 
 import matplotlib.dates as mdates
@@ -12,43 +12,30 @@ k = fr.diff_n  # 差分阶数
 
 # 绘制样本图
 fig, ax1 = plt.subplots(figsize=(7, 5))
-data_1 = pd.Series(hs.data)
+'''
+dta_1 = pd.Series(hs.data)
 p1 = str(len(hs.data))
-data_1.index = pd.Index(mdates.date2num(sm.tsa.datetools.dates_from_range('1', p1)))
-data_1.plot(ax=ax1)
-'''
-# 手动设置日期格式
-ax1.xaxis.set_major_locator(mdates.DayLocator())  # 设置主刻度为每天
-ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))  # 设置日期格式
-'''
-
-fig, ax3 = plt.subplots(figsize=(7, 5))
-dataset = hs.data + hs.ARMA_pre
-data_4 = pd.Series(dataset)
-p3 = str(len(dataset))
-data_4.index = pd.Index(mdates.date2num(sm.tsa.datetools.dates_from_range('1', p3)))
-data_4.plot(ax=ax3)
-
+ax1.plot(pd.to_datetime(pd.date_range(start='20000101', periods=int(p1), freq='D')), dta_1, label='Sample Data')
 '''
 # 绘制一阶差分图
-fig, ax2 = plt.subplots(figsize=(7, 5))
-data_2 = pd.Series(pre_face.data_diff)
+dta_2 = pd.Series(pre_face.data_diff)
 p2 = str(len(hs.data) - k)
-data_2.index = pd.Index(mdates.date2num(sm.tsa.datetools.dates_from_range('1', p2)))
-data_2.plot(ax=ax2)
-ax2.grid(True, linestyle="-.", color="r", linewidth="1")
-
-# 绘制预测图(还原差分)
-fig, ax3 = plt.subplots(figsize=(7, 5))
-data_pre_inv = hs.ARMA_pre_inv[:]
-data_3 = pd.Series(data_pre_inv)
-p4 = str(len(hs.data) + 7)
-data_3.index = pd.Index(mdates.date2num(sm.tsa.datetools.dates_from_range('1', p4)))
-data_3.plot(ax=ax3)
-ax3.grid(True, linestyle="-.", color="r", linewidth="1")
+ax1.plot(pd.to_datetime(pd.date_range(start='20000101', periods=int(p2), freq='D')), dta_2, label='First Difference')
+ax1.set_title('Sample and First Difference Plots')
+ax1.set_xlabel('Date')
+ax1.set_ylabel('Data')
+ax1.legend()
+ax1.grid(True, linestyle="-.", color="r", linewidth="1")
 '''
-
+# 绘制预测图(还原差分)
+ax2 = ax1.twinx()
+dta_pre_inv = hs.ARMA_pre_inv[:]
+p4 = str(len(hs.data) + 7)
+ax2.plot(pd.to_datetime(pd.date_range(start='20000101', periods=int(p4), freq='D'))[:len(dta_pre_inv)], dta_pre_inv, label='Forecast')
+ax2.set_ylabel('Forecast Data')
+ax2.legend()
+'''
 plt.show()
-#python3 -u "/Users/tanqianqian/Desktop/FinalYearProject/code/Visualization.py"
-#linear time series aggregation algorithm: ARIMA
 
+
+#python3 -u "/Users/tanqianqian/Desktop/FinalYearProject/code/Visualization.py"
