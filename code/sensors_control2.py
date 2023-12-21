@@ -153,11 +153,11 @@ if __name__ == '__main__':
 		forecast_data_set = [round(y,3) for y in forecast_data_set]
 
 		# 计算均值
-		data_combined_ecg = forecast_data_set + data_ecg_pre_set + float(5.0)
+		data_combined_ecg = forecast_data_set + data_ecg_pre_set
 		mean_ecg = round(sum(data_combined_ecg) / len(data_combined_ecg), 3)
 		print(f"The combined average value is: {mean_ecg}")
 
-		variance_ecg = round((amplitude_ecg - mean_ecg),3)
+		variance_ecg = round((amplitude_ecg - mean_ecg),3) + float(5.0)
 		print("ecg:" + str(amplitude_ecg))
 		print("mean:" + str(mean_ecg))
 		print("variance_ecg:" + str(variance_ecg))
