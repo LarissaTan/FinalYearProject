@@ -116,7 +116,7 @@ if data_start_index != -1 and data_end_index != -1:
     # 输出每个元素
     for element in data_list:
         parts = element.split(', ')
-        print(len(parts))
+        #print(len(parts))
         time = parts[0][0:-1]
         
         print(parts)
@@ -126,9 +126,12 @@ if data_start_index != -1 and data_end_index != -1:
         value2 = int(parts[2])
         value3 = parts[3][1:]
         #value4 = parts[4]
+
+        '''
         print("Time:", time)
         print("Value1:", value1)
         print("Value2:", value2)
+        '''
         print("Value3:", value3)
         print(element)
 
@@ -145,7 +148,7 @@ if data_start_index != -1 and data_end_index != -1:
         mean_ecg = round(sum(data_combined_ecg) / len(data_combined_ecg), 3)
         print(f"The combined average value is: {mean_ecg}")
 
-        raw_ecg = round((value1 + mean_ecg),3) - float(5.0)
+        raw_ecg = round((value1 + mean_ecg) - float(5.0),3)
         print(f"The raw value is: {raw_ecg}")
         
 
@@ -199,7 +202,7 @@ if data_start_index != -1 and data_end_index != -1:
 
 
             tmp_write_data = element[0:19] + ";" + str(ecg_value)
-            write_data(tmp_write_data)
+            #write_data(tmp_write_data)
             print("i dont why here is working")
             print(time, "----",tmp_time)
             tmp = element[29]
